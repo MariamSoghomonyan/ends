@@ -1,0 +1,229 @@
+
+<!DOCTYPE html>
+<html lang="hy">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&family=Momo+Signature&display=swap"
+      rel="stylesheet"
+    />
+    <title>Ծննդյան հրավեր</title>
+    <!-- <script src="script.js"></script> -->
+  </head>
+  <body>
+    <div class="bubbles"></div>
+
+    <div class="section1">
+      <img src="home-img.jpg" alt="baby-photo" class="baby-photo" />
+      <div class="text">
+        <span>Մարկ</span>
+        <p>Ծննդյան հրավեր</p>
+        <p class="last">Մնացել է</p>
+        <div id="time-left"></div>
+      </div>
+    </div>
+
+    <div
+      class="start-btn-container"
+      style="text-align: center; margin-top: 50px"
+    >
+      <button id="start-btn"><i class="fa-solid fa-play-circle"></i></button>
+    </div>
+
+    <audio id="bg-music" src="music.mp3"></audio>
+
+    <div class="section2">
+      <h3>Սիրելի ընկերներ և բարեկամներ</h3>
+      <p>
+        Սիրով հրավիրում ենք ձեզ <br />
+        կիսելու մեզ հետ մեր որդու՝
+      </p>
+      <h2>ՄԱՐԿԻ ԾՆՆԴՅԱՆ</h2>
+      <span>
+        <img src="number.jpg" alt="" />
+        <p>-ամյակը</p>
+      </span>
+      <p>Սպասում ենք ձեզ</p>
+      <h1>17 նոյեմբերի 2025</h1>
+    </div>
+
+    <div class="section3">
+      <p>17։30</p>
+      <p><<Բաոբաբ>> ռեստորան</p>
+      <p>Հասցե ՝ Ջրվեժ, Ե թաղամաս 2-րդ հատված, 6/12</p>
+      <img src="baobab.jpg" alt="restaurant photo" />
+      <span>
+        <button
+          onclick="window.open('https://www.google.com/maps?q=40.186847,44.586864', '_blank')"
+        >
+          Ինչպես հասնել
+        </button>
+      </span>
+    </div>
+
+    <img src="image2.jpg" class="image2" alt="baby photo 2" />
+
+    <div class="section4">
+      <h3>Խնդրում ենք հաստատել ձեր ներկայությունը</h3>
+      <p>Սիրով կսպասենք ձեր պատասխանին մինչև 12․11․2025</p>
+
+      <form id="rsvp-form">
+        <div class="radios">
+          <label class="label1">
+            <input type="radio" name="attendance" value="yes" required /> Կգանք
+          </label>
+          <label>
+            <input type="radio" name="attendance" value="no" required /> Չենք
+            գալու
+          </label>
+        </div>
+
+        <div class="info">
+          <label class="last">Նշեք անուն-ազգանուն և ձեր քանակը</label><br />
+          <input
+            type="text"
+            name="name"
+            placeholder="Անուն Ազգանուն"
+            required
+          />
+          <input type="text" name="number" placeholder="Քանակը" required />
+        </div>
+
+        <button type="submit">Ուղարկել</button>
+        <div id="response-message"></div>
+      </form>
+    </div>
+
+    <footer>
+      <p>Սիրով</p>
+      <h2>Դավիթ և Լիանա</h2>
+    </footer>
+
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"
+    ></script>
+
+    <script>
+      (function () {
+        emailjs.init("mwmRwDBtspRCwK_Gz"); // вставь свой Public Key
+      })();
+    </script>
+
+    <script>
+      const eventDate = new Date("2025-11-17T00:00:00");
+
+      function createTimerStructure() {
+        const timeSpan = document.getElementById("time-left");
+        timeSpan.innerHTML = `
+          <div><span id="days"></span><p>օր</p></div>
+          <div><span id="hours"></span><p>ժամ</p></div>
+          <div><span id="minutes"></span><p>րոպե</p></div>
+          <div><span id="seconds"></span><p>վայրկյան</p></div>
+        `;
+      }
+
+      function updateTimeLeft() {
+        const now = new Date();
+        const diff = eventDate - now;
+        const timeSpan = document.getElementById("time-left");
+
+        if (diff <= 0) {
+          timeSpan.textContent = "Տոնը արդեն եկել է 🎉";
+          return;
+        }
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / (1000 * 60)) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+
+        document.getElementById("days").textContent = days;
+        document.getElementById("hours").textContent = hours;
+        document.getElementById("minutes").textContent = minutes;
+        document.getElementById("seconds").textContent = seconds;
+      }
+
+      createTimerStructure();
+      updateTimeLeft();
+      setInterval(updateTimeLeft, 1000);
+
+      const bubblesContainer = document.querySelector(".bubbles");
+      const imageUrl = "balon.png";
+      function createBubbles(count = 30) {
+        for (let i = 0; i < count; i++) {
+          const bubble = document.createElement("div");
+          bubble.classList.add("bubble");
+          const size = 30 + Math.random() * 50;
+          bubble.style.width = size + "px";
+          bubble.style.height = size + "px";
+          bubble.style.left = Math.random() * 100 + "vw";
+          bubble.style.backgroundImage = `url(${imageUrl})`;
+          bubble.style.backgroundSize = "cover";
+          bubble.style.backgroundPosition = "center";
+          bubble.style.borderRadius = "50%";
+          bubble.style.animationDuration = 4 + Math.random() * 6 + "s";
+          bubblesContainer.appendChild(bubble);
+        }
+      }
+      createBubbles();
+
+      const form = document.getElementById("rsvp-form");
+      const responseMessage = document.getElementById("response-message");
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const formData = {
+          rsvp: form.attendance.value === "yes" ? "Կգանք" : "Չենք գալու",
+          from_name: form.name.value,
+          guest_count: form.number.value,
+        };
+
+        emailjs.send("service_gqleuaw", "template_7v58dmw", formData).then(
+          function () {
+            responseMessage.textContent =
+              "Շնորհակալություն, ձեր պատասխանն ուղարկվեց!";
+            form.reset();
+          },
+          function (error) {
+            responseMessage.textContent = "Սխալ՝ " + JSON.stringify(error);
+          }
+        );
+      });
+
+      const startBtn = document.getElementById("start-btn");
+      const bgMusic = document.getElementById("bg-music");
+      const icon = startBtn.querySelector("i");
+
+      startBtn.addEventListener("click", () => {
+        if (bgMusic.paused) {
+          bgMusic.play();
+          icon.classList.replace("fa-play-circle", "fa-pause-circle");
+          startBtn.classList.add("playing");
+        } else {
+          bgMusic.pause();
+          icon.classList.replace("fa-pause-circle", "fa-play-circle");
+          startBtn.classList.remove("playing");
+        }
+
+        const section2 = document.querySelector(".section2");
+        if (section2) {
+          section2.scrollIntoView({ behavior: "smooth" });
+        }
+
+        createBubbles(15);
+      });
+    </script>
+  </body>
+</html>
+<!-- //template_7v58dmw -->
